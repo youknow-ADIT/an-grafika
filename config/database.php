@@ -4,9 +4,20 @@
  * Compatible with TiDB Cloud Serverless & Local MySQL / MariaDB (XAMPP)
  */
 
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 if (php_sapi_name() !== 'cli' && session_status() === PHP_SESSION_NONE) {
     @session_start();
 }
+
+// Backward-compatible PDO MySQL SSL constants across PHP 8.0 - 8.5+
+$attr_ssl_ca = defined('Pdo\Mysql::ATTR_SSL_CA')
+    ? \Pdo\Mysql::ATTR_SSL_CA
+    : (defined('PDO::MYSQL_ATTR_SSL_CA') ? @constant('PDO::MYSQL_ATTR_SSL_CA') : 1002);
+
+$attr_ssl_verify = defined('Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT')
+    ? \Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT
+    : (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') ? @constant('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') : 1014);
 
 // 1. Detect Cloud Environment Variables (Vercel / Cloud Provider)
 $env_host = getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ($_SERVER['DB_HOST'] ?? (getenv('TIDB_HOST') ?: ($_ENV['TIDB_HOST'] ?? ($_SERVER['TIDB_HOST'] ?? null)))));
@@ -32,15 +43,15 @@ if (!empty($env_host)) {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,
             // SSL / TLS configuration for TiDB Cloud
-            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+            $attr_ssl_verify => false,
         ];
 
         // Custom CA certificate (bundled in repo or system store)
         $caCert = __DIR__ . '/ca.pem';
         if (file_exists($caCert)) {
-            $options[PDO::MYSQL_ATTR_SSL_CA] = $caCert;
+            $options[$attr_ssl_ca] = $caCert;
         } else if (file_exists('/etc/ssl/certs/ca-certificates.crt')) {
-            $options[PDO::MYSQL_ATTR_SSL_CA] = '/etc/ssl/certs/ca-certificates.crt';
+            $options[$attr_ssl_ca] = '/etc/ssl/certs/ca-certificates.crt';
         }
 
         $pdo = new PDO($dsn, $user, $pass, $options);

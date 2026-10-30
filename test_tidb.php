@@ -19,16 +19,24 @@ $status = 'idle';
 
 if (!empty($host) && !empty($user)) {
     try {
+        $attr_ssl_ca = defined('Pdo\Mysql::ATTR_SSL_CA')
+            ? \Pdo\Mysql::ATTR_SSL_CA
+            : (defined('PDO::MYSQL_ATTR_SSL_CA') ? @constant('PDO::MYSQL_ATTR_SSL_CA') : 1002);
+
+        $attr_ssl_verify = defined('Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT')
+            ? \Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT
+            : (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') ? @constant('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') : 1014);
+
         $dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+            $attr_ssl_verify             => false,
         ];
         
         $caCert = __DIR__ . '/config/ca.pem';
         if (file_exists($caCert)) {
-            $options[PDO::MYSQL_ATTR_SSL_CA] = $caCert;
+            $options[$attr_ssl_ca] = $caCert;
         }
 
         $pdo = new PDO($dsn, $user, $pass, $options);

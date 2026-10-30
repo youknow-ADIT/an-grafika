@@ -4,6 +4,9 @@
  * Routes incoming web requests to their respective PHP handlers
  */
 
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+ini_set('display_errors', '0');
+
 $rawUri = $_SERVER['REQUEST_URI'] ?? '/';
 $path = parse_url($rawUri, PHP_URL_PATH);
 $path = rawurldecode($path);
