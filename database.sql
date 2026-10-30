@@ -1,8 +1,8 @@
 -- Database Schema for AN Grafika Web-to-Print & Design POS System
 -- Compatible with MySQL / MariaDB (XAMPP)
 
-CREATE DATABASE IF NOT EXISTS `angrafika_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `angrafika_db`;
+-- Schema for AN Grafika (Compatible with MySQL, MariaDB, and TiDB Cloud Serverless)
+-- --------------------------------------------------------
 
 -- --------------------------------------------------------
 -- Table: users (Admin & Pegawai / Staff Kasir)
