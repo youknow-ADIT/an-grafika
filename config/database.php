@@ -24,7 +24,7 @@ if (!empty($env_host)) {
         $port = !empty($env_port) ? (string)$env_port : '4000';
         $user = !empty($env_user) ? (string)$env_user : 'root';
         $pass = $env_pass !== null ? (string)$env_pass : '';
-        $name = !empty($env_name) ? (string)$env_name : 'test';
+        $name = !empty($env_name) ? (string)$env_name : 'angrafika_db';
 
         $dsn = "mysql:host={$env_host};port={$port};dbname={$name};charset=utf8mb4";
         $options = [
@@ -35,10 +35,12 @@ if (!empty($env_host)) {
             PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
         ];
 
-        // Optional custom CA certificate if present
+        // Custom CA certificate (bundled in repo or system store)
         $caCert = __DIR__ . '/ca.pem';
         if (file_exists($caCert)) {
             $options[PDO::MYSQL_ATTR_SSL_CA] = $caCert;
+        } else if (file_exists('/etc/ssl/certs/ca-certificates.crt')) {
+            $options[PDO::MYSQL_ATTR_SSL_CA] = '/etc/ssl/certs/ca-certificates.crt';
         }
 
         $pdo = new PDO($dsn, $user, $pass, $options);
