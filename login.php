@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <h2 class="text-2xl font-black tracking-tight">Portal Internal AN Grafika</h2>
                     <p class="text-xs text-pink-100 mt-2 leading-relaxed">
-                        Akses khusus untuk Administrator dan Pegawai Kasir (*POS & Workshop Management*).
+                        Akses khusus untuk Administrator dan Pegawai Kasir.
                     </p>
                 </div>
             </div>
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             <div class="mb-6">
                 <h3 class="text-2xl font-black text-slate-900 tracking-tight">Masuk ke Sistem</h3>
-                <p class="text-xs text-slate-500 mt-1">Masukkan kredensial akun Anda untuk melanjutkan ke dashboard.</p>
+                <p class="text-xs text-slate-500 mt-1">Masukkan akun Anda untuk melanjutkan ke dashboard.</p>
             </div>
 
             <?php if (!empty($error)): ?>
@@ -127,20 +127,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </button>
                 </div>
             </form>
-
-            <!-- Quick Auto-Fill Demo Accounts -->
-            <div class="mt-8 pt-6 border-t border-slate-100">
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Akun Demo Siap Klik (Otomatis Isi):</span>
-                <div class="grid grid-cols-2 gap-2 text-xs">
-                    <button type="button" onclick="fillAccount('admin', 'admin123')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 text-left transition group">
-                        <span class="font-bold text-[#00388C] block text-[11px] group-hover:underline">Akun Administrator</span>
-                        <span class="text-[10px] text-slate-500">User: admin / admin123</span>
-                    </button>
-                    <button type="button" onclick="fillAccount('kasir1', 'kasir123')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-pink-50 hover:border-pink-300 text-left transition group">
-                        <span class="font-bold text-[#C30064] block text-[11px] group-hover:underline">Akun Pegawai Kasir</span>
-                        <span class="text-[10px] text-slate-500">User: kasir1 / kasir123</span>
-                    </button>
-                </div>
             </div>
 
         </div>
