@@ -72,7 +72,6 @@
                             <span>Login Portal Pegawai (POS)</span>
                         </a></li>
                         <li><a href="login.php" class="hover:text-white transition">Login Portal Administrator</a></li>
-                        <li><a href="install.php" class="text-slate-500 hover:text-slate-300 text-[11px]">Setup Database XAMPP</a></li>
                     </ul>
                 </div>
 
