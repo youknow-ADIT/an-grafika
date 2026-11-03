@@ -327,7 +327,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_order'])) {
                     <div>
                         <label class="block text-xs font-semibold text-slate-200 mb-1.5 flex items-center justify-between">
                             <span>Punya Kode Voucher Diskon?</span>
-                            <span class="text-[10px] text-pink-300 font-mono">Coba: DISKON10</span>
                         </label>
                         <div class="flex items-center gap-2">
                             <input type="text" name="voucher_code" id="voucher_code" placeholder="KODE VOUCHER" class="uppercase w-full px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-300 text-xs font-bold font-mono focus:outline-none focus:ring-2 focus:ring-pink-400">
